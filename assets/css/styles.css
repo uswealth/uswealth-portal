@@ -28,6 +28,10 @@ h1,h2,h3,h4{color:var(--navy);margin:0 0 .4em}
 .hero p{color:#d7e2f0;max-width:640px;font-size:18px}
 .cta{display:inline-block;margin-top:18px;background:var(--accent);color:#1a1300;font-weight:700;padding:12px 22px;border-radius:6px}
 .cta.ghost{background:transparent;color:#fff;border:1px solid #48628a;margin-left:10px}
+.hero-disc{color:#c7d2e0;font-size:12.5px;max-width:640px;margin:6px 0 0}
+.hero-disc a{color:#ecd98a}
+.cta-disc{color:#a9bcd6;font-size:12px;margin:12px 0 0}
+.fine{color:var(--slate);font-size:12.5px;line-height:1.5;margin:8px 0 0}
 .props{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:36px 0}
 .prop{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px}
 .prop h3{font-size:16px}
