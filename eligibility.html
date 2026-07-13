@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Eligible-investor verification — U.S. Wealth Fund</title>
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">U.S. WEALTH FUND<small>Eligible-investor access</small></a>
+    <nav class="nav"><a href="index.html">← Back to site</a></nav>
+  </div>
+</header>
+
+<main class="app-main">
+  <div class="wrap">
+
+    <div class="notice">
+      <strong>This is not an offer or solicitation.</strong> Access to the USWF Investment Thesis and
+      data room is restricted to <strong>eligible / qualified investors</strong> and requires
+      confidentiality (NDA). Any offering is made <strong>solely through definitive offering
+      documents</strong>. Completing this form is a self-certification request for access — it does
+      not create an investment, an account, or any obligation. All figures across this site are
+      simulated/illustrative.
+    </div>
+
+    <form class="egate" id="egate" novalidate>
+      <h2>Eligible-investor verification</h2>
+      <p class="sub">Please confirm your status to request access. Required fields are marked *.</p>
+
+      <div class="field">
+        <label class="q" for="cat">Investor category *</label>
+        <select id="cat" required>
+          <option value="">Select…</option>
+          <option>Individual — accredited investor / qualified purchaser</option>
+          <option>Family office</option>
+          <option>Fund of funds</option>
+          <option>Sovereign wealth fund</option>
+          <option>Pension fund</option>
+          <option>Endowment / foundation</option>
+          <option>Other institutional investor</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="q">Eligibility attestations *</label>
+        <label class="check"><input type="checkbox" id="c_acc">
+          I qualify as an <strong>accredited investor</strong> and/or <strong>qualified purchaser</strong>
+          under applicable U.S. securities laws — or, if outside the U.S., a <strong>professional /
+          institutional investor</strong> eligible under my local rules.</label>
+        <label class="check"><input type="checkbox" id="c_auth">
+          I am acting for myself, or I am <strong>duly authorized</strong> to act on behalf of the
+          institution I represent.</label>
+        <label class="check"><input type="checkbox" id="c_juris">
+          I am <strong>not</strong> accessing this from, or on behalf of a person in, a jurisdiction
+          where receipt of these materials would be unlawful.</label>
+      </div>
+
+      <div class="field">
+        <label class="q">Confidentiality (NDA) *</label>
+        <div class="nda">
+          <details>
+            <summary>Read the confidentiality summary</summary>
+            <p>The Investment Thesis, data room, track record, and related materials (“Confidential
+            Information”) are provided for your <strong>evaluation only</strong>. You agree to keep them
+            confidential, not to copy, distribute, or use them for any other purpose, and to return or
+            destroy them on request. Nothing herein grants any license or constitutes investment,
+            legal, or tax advice. <em>This is a summary; a definitive NDA will be executed before
+            materials are released, and is subject to review by counsel.</em></p>
+          </details>
+        </div>
+        <label class="check"><input type="checkbox" id="c_nda">
+          I have read and agree to the <strong>confidentiality terms</strong> above.</label>
+        <label class="check"><input type="checkbox" id="c_offer">
+          I understand this is <strong>not an offer or solicitation</strong>, that any offering is made
+          solely via definitive documents, and that all site figures are simulated/illustrative.</label>
+      </div>
+
+      <div class="field">
+        <label class="q" for="nm">Full name *</label>
+        <input type="text" id="nm" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label class="q" for="em">Work email *</label>
+        <input type="email" id="em" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label class="q" for="org">Organization (if applicable)</label>
+        <input type="text" id="org" autocomplete="organization">
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn primary" id="submit" disabled>Request access ▸</button>
+        <p class="fine" id="hint">Complete all required fields and attestations to enable the request.</p>
+        <div class="result" id="result" role="status" aria-live="polite"></div>
+      </div>
+    </form>
+
+  </div>
+</main>
+
+<div class="disclosure" id="disclosures">
+  <div class="wrap">
+    <strong>Risk disclosures.</strong> “Defined risk,” “unlimited potential,” and “bulletproof” are
+    technical descriptions of position structure, <em>not guarantees of profit or against loss.</em>
+    Options involve risk and are not suitable for all investors. Any performance shown is hypothetical
+    or historical and labeled as such; past performance does not indicate future results. Nothing here
+    is an offer to sell or a solicitation to buy any security; any offer is made solely via definitive
+    offering documents to eligible/qualified investors. <strong>Methodology credit: RPM / RadioActive
+    Trading by Kurt Frankenberg, PowerOptions (poweropt.com).</strong>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    U.S. Wealth Fund (USWF) · One World Trade Center, 85th Floor, New York, New York · admin@uswealth.fund
+    <br>Prototype — eligibility gate (Deliverable 09, Item 2). Simulated data; not an offer or solicitation.
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reqChecks = ["c_acc","c_auth","c_juris","c_nda","c_offer"];
+  var els = {}; ["cat","nm","em","submit","hint","result","org"].concat(reqChecks)
+    .forEach(function (id) { els[id] = document.getElementById(id); });
+
+  function emailOK(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function ready() {
+    var allChecked = reqChecks.every(function (id) { return els[id].checked; });
+    return allChecked && els.cat.value && els.nm.value.trim() && emailOK(els.em.value.trim());
+  }
+  function refresh() {
+    var ok = ready();
+    els.submit.disabled = !ok;
+    els.hint.textContent = ok ? "Ready — submit to request access."
+      : "Complete all required fields and attestations to enable the request.";
+  }
+  document.getElementById("egate").addEventListener("input", refresh);
+  document.getElementById("egate").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!ready()) return;
+    var body = [
+      "USWF eligible-investor access request",
+      "",
+      "Category: " + els.cat.value,
+      "Name: " + els.nm.value.trim(),
+      "Email: " + els.em.value.trim(),
+      "Organization: " + (els.org.value.trim() || "(n/a)"),
+      "",
+      "Attestations confirmed:",
+      "- Accredited investor / qualified purchaser (or non-US professional/institutional equivalent)",
+      "- Authorized to act (self or institution)",
+      "- Lawful jurisdiction",
+      "- Agrees to confidentiality (NDA) terms",
+      "- Understands: not an offer; offering only via definitive documents; site figures simulated",
+      "",
+      "(Prototype: submitted via email. Production will capture this server-side with verification — S28.)"
+    ].join("\n");
+    var href = "mailto:admin@uswealth.fund?subject=" +
+      encodeURIComponent("USWF eligible-investor access request") +
+      "&body=" + encodeURIComponent(body);
+    els.result.className = "result ok";
+    els.result.innerHTML = "Thank you — your request is prepared. If your email client did not open, " +
+      'email <a href="mailto:admin@uswealth.fund">admin@uswealth.fund</a> with the details above. ' +
+      "USWF will verify eligibility and execute an NDA before releasing any materials.";
+    window.location.href = href;
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>
