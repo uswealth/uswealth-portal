@@ -2,7 +2,7 @@
 **Owner:** M7 Portal Platform & Product Engineering Manager · Built by S25–S29
 **Status:** Runnable front-end prototype · **Data: simulated/illustrative — not live, no real orders**
 
-This is the **investor-facing portal that benchmarks and replaces the PowerOptions site**, built to
+This is the **investor-facing portal for the RPM-MAS**, built to
 the specs in the RPM Agent Framework (M7) and the launch content in
 `../03_Deliverables/04_USWF_Portal_Content.md`. It runs as a dependency-free static site and
 implements the **real RAT math** from the source docs (`rat.js`), so the numbers on screen are
