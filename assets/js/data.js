@@ -33,7 +33,7 @@
         positions: [ { rpm: homeRPM, livePrice: 49.10 } ]
       },
       {
-        id: "E-and-J-Wedding", label: "E-and-J-Wedding",
+        id: "E-and-J-Reception", label: "E-and-J-Reception",
         goal: 100000, horizon: "6–9 months", capital: 9210,
         positions: [ { rpm: wedRPM, livePrice: 90.25 } ]
       }
