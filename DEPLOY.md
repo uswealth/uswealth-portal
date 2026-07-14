@@ -2,11 +2,69 @@
 **Companion to** `../03_Deliverables/05_USWF_Portal_Deployment_Guide.md` (general guide). This is the
 concrete, copy-paste version for *this* static prototype.
 
-> ⚠️ **Compliance gate (M6/S22) — do this first.** This prototype is labeled *simulated / not
-> production / not compliance-cleared*. Before it becomes the **public** face of a real fund, USWF
-> Compliance must clear the visible copy and disclosures. **Recommended flow: deploy to a private/
-> staging URL → compliance review → then repoint the domain.** Steps below are marked **[STAGING]**
-> (safe now) vs **[PUBLIC]** (needs your GoDaddy DNS + compliance sign-off).
+---
+
+## ✅ CURRENT STATE — LIVE (as of the go-live below)
+
+**The site is deployed and public at → https://uswealth.fund** (hosted on GitHub Pages, repo
+`uswealth/uswealth-portal`, branch `master`, root `/`).
+
+| Item | State |
+|------|-------|
+| Host | GitHub Pages (`uswealth/uswealth-portal`) |
+| Custom domain (Pages) | `uswealth.fund` bound · `CNAME` file present on remote |
+| TLS certificate | `approved` · **HTTPS enforced** |
+| `https://uswealth.fund` | HTTP/2 **200** (marketing site) |
+| `https://uswealth.fund/app.html` · `/eligibility.html` | 200 (portal demo · eligibility gate) |
+| `www.uswealth.fund` | **301 → https://uswealth.fund/** |
+| Email `admin@uswealth.fund` | **Proton Mail — preserved, untouched** |
+| GoDaddy park page | removed |
+
+### The exact live DNS records (GoDaddy → uswealth.fund)
+```
+Type   Name  Value                     Note
+A      @     185.199.108.153           GitHub Pages  (each IP is its OWN record row)
+A      @     185.199.109.153           GitHub Pages
+A      @     185.199.110.153           GitHub Pages
+A      @     185.199.111.153           GitHub Pages
+CNAME  www   uswealth.github.io        edited the pre-existing "www → uswealth.fund" record
+NS     @     ns37.domaincontrol.com    GoDaddy nameserver — KEEP (do not delete)
+NS     @     ns38.domaincontrol.com    GoDaddy nameserver — KEEP (do not delete)
+MX     @     mail.protonmail.ch (10)   email — KEEP
+MX     @     mailsec.protonmail.ch (20) email — KEEP
+CNAME  protonmail._domainkey   …proton.ch   DKIM — KEEP
+CNAME  protonmail2._domainkey  …proton.ch   DKIM — KEEP
+CNAME  protonmail3._domainkey  …proton.ch   DKIM — KEEP
+CNAME  pay   paylinks.commerce.godaddy.com  GoDaddy pay-links — harmless, KEEP
+TXT    @     (SPF / DMARC for Proton)  email auth — KEEP
+```
+> ⚠️ **Do not disturb the Proton email records** (`MX`, `protonmail*._domainkey`, SPF/DMARC `TXT`) or
+> the `NS` records. Only the four `@` `A` records and the `www` `CNAME` are the website.
+
+### How it was bound (GitHub side, via gh)
+```bash
+gh api -X PUT repos/uswealth/uswealth-portal/pages -f cname='uswealth.fund'   # sets domain + CNAME file
+# wait for cert -> state "approved", then:
+gh api -X PUT repos/uswealth/uswealth-portal/pages -F https_enforced=true
+```
+
+### To update the live site later
+Edit files in `portal/`, then `git commit && git push origin master` — GitHub Pages redeploys
+automatically (~1–2 min). The `CNAME` (custom domain) persists across pushes.
+
+> ⚠️ **Open compliance item (post-launch).** The site went public **ahead of securities-counsel
+> sign-off** at the investor's explicit direction (see `../03_Deliverables/09_...md`). Still to
+> close: counsel to confirm the offering posture (Reg D 506(b) vs 506(c)) and finalize the
+> eligibility-gate NDA/attestation wording. The site currently carries "prototype / simulated data"
+> labels.
+
+---
+
+## Original runbook (for reference / re-deploy elsewhere)
+
+> ⚠️ **Compliance gate (M6/S22).** This prototype is labeled *simulated*. Before it is the **public**
+> face of a real fund, Compliance should clear the visible copy. Steps are marked **[STAGING]** vs
+> **[PUBLIC]**.
 
 Site root to publish: **this `portal/` folder** (entry: `index.html`).
 
